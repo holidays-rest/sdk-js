@@ -3,6 +3,34 @@
  * https://docs.holidays.rest
  */
 
+/**
+ * Holiday name keyed by language code.
+ * @typedef {Object.<string, string>} HolidayName
+ */
+
+/**
+ * Day-of-week information for a holiday.
+ * @typedef {Object} HolidayDay
+ * @property {string} actual   - Day of week the holiday falls on (e.g. "Thursday")
+ * @property {string} observed - Day of week the holiday is observed (may differ for substitution days)
+ */
+
+/**
+ * A single holiday entry returned by the API.
+ * @typedef {Object} Holiday
+ * @property {string}      country_code - ISO 3166 alpha-2 country code (e.g. "DE")
+ * @property {string}      country_name - Full country name (e.g. "Germany")
+ * @property {string}      date         - ISO 8601 date string (e.g. "2026-01-01")
+ * @property {HolidayName} name         - Holiday name keyed by language code (e.g. { en: "New Year's Day" })
+ * @property {boolean}     isNational   - True if this is a national public holiday
+ * @property {boolean}     isReligious  - True if this is a religious observance
+ * @property {boolean}     isLocal      - True if this is a local or regional holiday
+ * @property {boolean}     isEstimate   - True if the date is an estimate (e.g. lunar-based holidays)
+ * @property {HolidayDay}  day          - Actual and observed day-of-week info
+ * @property {string}      religion     - Religion name (e.g. "Christianity") or empty string
+ * @property {string[]}    regions      - Region/subdivision codes where this holiday applies (empty = nationwide)
+ */
+
 const BASE_URL = 'https://api.holidays.rest/v1';
 
 export class HolidaysApiError extends Error {
@@ -73,11 +101,11 @@ export class HolidaysClient {
    * @param {number|string}   [params.month]    - 1–12
    * @param {number|string}   [params.day]      - 1–31
    * @param {string|string[]} [params.type]     - "religious" | "national" | "local"
-   * @param {number|number[]} [params.religion] - Religion code(s) 1–11
+   * @param {string|string[]} [params.religion] - Religion name(s) (e.g. "Christianity", "Islam")
    * @param {string|string[]} [params.region]   - Region/subdivision code(s)
    * @param {string|string[]} [params.lang]     - Language code(s)
    * @param {string}          [params.response] - "json" | "xml" | "yaml" | "csv" (default: "json")
-   * @returns {Promise<any>}
+   * @returns {Promise<Holiday[]>}
    */
   holidays({ country, year, month, day, type, religion, region, lang, response } = {}) {
     if (!country) throw new Error('holidays(): country is required');

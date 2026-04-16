@@ -1,6 +1,36 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { HolidaysClient, HolidaysApiError } from '../index.js';
 
+const HOLIDAY_NATIONAL = {
+  country_code: 'DE',
+  country_name: 'Germany',
+  date: '2026-01-01',
+  name: { en: "New Year's Day" },
+  isNational: true,
+  isReligious: false,
+  isLocal: false,
+  isEstimate: false,
+  day: { actual: 'Thursday', observed: 'Thursday' },
+  religion: '',
+  regions: [],
+};
+
+const HOLIDAY_RELIGIOUS_LOCAL = {
+  country_code: 'DE',
+  country_name: 'Germany',
+  date: '2026-01-06',
+  name: { en: 'Epiphany' },
+  isNational: false,
+  isReligious: true,
+  isLocal: true,
+  isEstimate: false,
+  day: { actual: 'Tuesday', observed: 'Tuesday' },
+  religion: 'Christianity',
+  regions: ['BW', 'BY', 'ST'],
+};
+
+const HOLIDAYS_FIXTURE = [HOLIDAY_NATIONAL, HOLIDAY_RELIGIOUS_LOCAL];
+
 function mockFetch(status, body, contentType = 'application/json') {
   return vi.stubGlobal(
     'fetch',
@@ -184,31 +214,75 @@ describe('HolidaysClient.holidays', () => {
   });
 
   it('calls /holidays endpoint', async () => {
-    mockFetch(200, []);
-    await client.holidays({ country: 'US', year: 2024 });
+    mockFetch(200, HOLIDAYS_FIXTURE);
+    await client.holidays({ country: 'DE', year: 2026 });
     const [url] = fetch.mock.calls[0];
     expect(url).toContain('/holidays');
   });
 
+  it('returns array of holiday objects', async () => {
+    mockFetch(200, HOLIDAYS_FIXTURE);
+    const result = await client.holidays({ country: 'DE', year: 2026 });
+    expect(Array.isArray(result)).toBe(true);
+    expect(result).toHaveLength(2);
+  });
+
+  it('holiday has expected shape', async () => {
+    mockFetch(200, HOLIDAYS_FIXTURE);
+    const [holiday] = await client.holidays({ country: 'DE', year: 2026 });
+    expect(holiday).toMatchObject({
+      country_code: 'DE',
+      country_name: 'Germany',
+      date: '2026-01-01',
+      name: { en: "New Year's Day" },
+      isNational: true,
+      isReligious: false,
+      isLocal: false,
+      isEstimate: false,
+      day: { actual: 'Thursday', observed: 'Thursday' },
+      religion: '',
+      regions: [],
+    });
+  });
+
+  it('religious local holiday has religion string and regions array', async () => {
+    mockFetch(200, HOLIDAYS_FIXTURE);
+    const result = await client.holidays({ country: 'DE', year: 2026 });
+    const epiphany = result[1];
+    expect(epiphany.religion).toBe('Christianity');
+    expect(epiphany.regions).toEqual(['BW', 'BY', 'ST']);
+    expect(epiphany.isReligious).toBe(true);
+    expect(epiphany.isLocal).toBe(true);
+    expect(epiphany.isNational).toBe(false);
+  });
+
   it('passes all optional params', async () => {
-    mockFetch(200, []);
+    mockFetch(200, HOLIDAYS_FIXTURE);
     await client.holidays({
-      country: 'US',
-      year: 2024,
-      month: 12,
-      day: 25,
-      type: 'national',
-      religion: 1,
-      region: 'CA',
+      country: 'DE',
+      year: 2026,
+      month: 1,
+      day: 6,
+      type: 'religious',
+      religion: 'Christianity',
+      region: 'BW',
       lang: 'en',
       response: 'json',
     });
     const [url] = fetch.mock.calls[0];
-    expect(url).toContain('month=12');
-    expect(url).toContain('day=25');
-    expect(url).toContain('type=national');
-    expect(url).toContain('region=CA');
+    expect(url).toContain('month=1');
+    expect(url).toContain('day=6');
+    expect(url).toContain('type=religious');
+    expect(url).toContain('religion=Christianity');
+    expect(url).toContain('region=BW');
     expect(url).toContain('lang=en');
+  });
+
+  it('passes religion as comma-separated string when array given', async () => {
+    mockFetch(200, HOLIDAYS_FIXTURE);
+    await client.holidays({ country: 'DE', year: 2026, religion: ['Christianity', 'Islam'] });
+    const [url] = fetch.mock.calls[0];
+    expect(decodeURIComponent(url)).toContain('religion=Christianity,Islam');
   });
 });
 
