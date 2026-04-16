@@ -1,5 +1,7 @@
 # holidays.rest JavaScript SDK
 
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/f7388d86cf3141c7bf32b9aa5edd1af7)](https://app.codacy.com/gh/holidays-rest/sdk-js/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+
 Official JavaScript SDK for the [holidays.rest](https://holidays.rest) API.
 
 ## Requirements

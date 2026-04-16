@@ -1,5 +1,5 @@
 {
-  "name": "holidays.rest",
+  "name": "@holidays-rest/sdk-js",
   "version": "1.0.0",
   "description": "Official JavaScript SDK for the holidays.rest API",
   "type": "module",
@@ -24,7 +24,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/msdundar/holidays.rest"
+    "url": "https://github.com/holidays-rest/holidays.rest"
   },
   "homepage": "https://docs.holidays.rest"
 }
