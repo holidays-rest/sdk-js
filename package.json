@@ -1,0 +1,30 @@
+{
+  "name": "holidays.rest",
+  "version": "1.0.0",
+  "description": "Official JavaScript SDK for the holidays.rest API",
+  "type": "module",
+  "main": "./index.js",
+  "exports": {
+    ".": "./index.js"
+  },
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "holidays",
+    "public-holidays",
+    "calendar",
+    "api",
+    "sdk"
+  ],
+  "author": "msdundar",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/msdundar/holidays.rest"
+  },
+  "homepage": "https://docs.holidays.rest"
+}
