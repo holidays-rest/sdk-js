@@ -10,6 +10,12 @@
   "files": [
     "index.js"
   ],
+  "scripts": {
+    "build": "echo 'No build step required'",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "typecheck": "tsc --noEmit"
+  },
   "keywords": [
     "holidays",
     "public-holidays",
@@ -26,5 +32,10 @@
     "type": "git",
     "url": "https://github.com/holidays-rest/holidays.rest"
   },
-  "homepage": "https://docs.holidays.rest"
+  "homepage": "https://www.holidays.rest",
+  "devDependencies": {
+    "@vitest/coverage-v8": "^3.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^3.0.0"
+  }
 }
