@@ -35,7 +35,7 @@
   "homepage": "https://www.holidays.rest",
   "devDependencies": {
     "@vitest/coverage-v8": "^3.0.0",
-    "typescript": "^5.0.0",
+    "typescript": "^6.0.2",
     "vitest": "^3.0.0"
   }
 }
