@@ -51,7 +51,7 @@ Fetch public holidays for a country and year.
 | `month`    | number \| string   | no       | Month filter (1–12)                              |
 | `day`      | number \| string   | no       | Day filter (1–31)                                |
 | `type`     | string \| string[] | no       | `"religious"`, `"national"`, `"local"`           |
-| `religion` | number \| number[] | no       | Religion code(s) 1–11                            |
+| `religion` | string \| string[] | no       | Religion name(s) (e.g. `"Christianity"`, `"Islam"`) |
 | `region`   | string \| string[] | no       | Region/subdivision code(s) — see `client.country()`|
 | `lang`     | string \| string[] | no       | Language code(s) — see `client.languages()`      |
 | `response` | string             | no       | `"json"` (default) \| `"xml"` \| `"yaml"` \| `"csv"` |
@@ -74,6 +74,27 @@ await client.holidays({ country: 'US', year: 2024, region: 'US-CA' });
 
 // Get CSV format
 await client.holidays({ country: 'US', year: 2024, response: 'csv' });
+```
+
+**Response shape** (each item in the returned array):
+
+```js
+{
+  country_code: "DE",           // ISO 3166 alpha-2
+  country_name: "Germany",
+  date: "2026-01-01",           // ISO 8601
+  name: { en: "New Year's Day" },  // keyed by language code
+  isNational: true,
+  isReligious: false,
+  isLocal: false,
+  isEstimate: false,
+  day: {
+    actual: "Thursday",         // day the holiday falls on
+    observed: "Thursday"        // day it is observed (may differ)
+  },
+  religion: "",                 // e.g. "Christianity", or "" if not religious
+  regions: []                   // subdivision codes; empty means nationwide
+}
 ```
 
 ---
