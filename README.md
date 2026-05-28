@@ -12,7 +12,7 @@ Official JavaScript SDK for the [holidays.rest](https://holidays.rest) API.
 ## Installation
 
 ```bash
-npm install holidays.rest
+npm i @holidays-rest/sdk-js
 ```
 
 ## Quick Start
