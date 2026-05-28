@@ -9,6 +9,8 @@ Official JavaScript SDK for the [holidays.rest](https://holidays.rest) API.
 
 ```bash
 npm i @holidays-rest/sdk-js
+# or
+yarn add @holidays-rest/sdk-js
 ```
 
 ## Quick Start
