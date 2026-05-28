@@ -134,7 +134,7 @@ const langs = await client.languages();
 Failed requests throw `HolidaysApiError`:
 
 ```js
-import HolidaysClient, { HolidaysApiError } from 'holidays.rest';
+import HolidaysClient, { HolidaysApiError } from '@holidays-rest/sdk-js';
 
 try {
   await client.holidays({ country: 'US', year: 2024 });
