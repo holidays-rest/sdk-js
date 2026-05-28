@@ -18,7 +18,7 @@ npm i @holidays-rest/sdk-js
 ## Quick Start
 
 ```js
-import HolidaysClient from 'holidays.rest';
+import HolidaysClient from '@holidays-rest/sdk-js';
 
 const client = new HolidaysClient({ apiKey: 'YOUR_API_KEY' });
 
