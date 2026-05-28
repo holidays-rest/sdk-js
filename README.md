@@ -5,10 +5,6 @@
 
 Official JavaScript SDK for the [holidays.rest](https://holidays.rest) API.
 
-## Requirements
-
-- Node.js ≥ 18 (uses native `fetch` — no dependencies)
-
 ## Installation
 
 ```bash
