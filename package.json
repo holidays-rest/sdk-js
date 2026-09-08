@@ -26,7 +26,7 @@
   "author": "msdundar",
   "license": "MIT",
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=22.0.0"
   },
   "repository": {
     "type": "git",
@@ -34,8 +34,8 @@
   },
   "homepage": "https://www.holidays.rest",
   "devDependencies": {
-    "@vitest/coverage-v8": "^4.1.4",
+    "@vitest/coverage-v8": "^5.0.0",
     "typescript": "^7.0.2",
-    "vitest": "^4.1.4"
+    "vitest": "^5.0.0"
   }
 }
